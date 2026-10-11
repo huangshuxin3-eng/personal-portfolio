@@ -1,0 +1,226 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cream: #f7f4f0;
+}
+
+html,
+body {
+  background: var(--cream);
+  color: #1a1a1a;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* 纸张噪点：极轻的全屏颗粒叠加 */
+.paper-noise::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.28;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   CASE STUDY（/portfolio/legaltrace）
+   只新增下列少量原子；不覆盖上面任何既有规则，也不影响首页。
+   ════════════════════════════════════════════════════════════ */
+
+@layer components {
+  /* mono eyebrow / metadata：全页统一 10px / 0.34em / 46% 灰 */
+  .cs-eyebrow {
+    @apply font-mono text-[10px] uppercase leading-[1.5] tracking-[0.34em] text-ink/45;
+  }
+
+  /* 小电力蓝圆点 */
+  .cs-dot {
+    @apply inline-block h-[7px] w-[7px] flex-none rounded-full bg-electric;
+  }
+
+  /* 截图外框：真实产品截图统一边框 + 阴影，不加任何滤镜 */
+  .cs-shot {
+    @apply relative block overflow-hidden rounded-[4px] border border-ink/20 bg-white;
+    box-shadow: 0 30px 62px rgba(26, 26, 26, 0.13);
+  }
+
+  /* 卡片：白底 + 发丝边 + 统一阴影 */
+  .cs-card {
+    @apply rounded-[4px] border border-ink/[0.22] bg-white;
+    box-shadow: 0 16px 34px rgba(26, 26, 26, 0.075);
+  }
+}
+
+/* ── 滚动进场：一次性，克制 ───────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.62s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Section 05：成果文件夹极轻微浮动 ─────────────────────── */
+@keyframes cs-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+.cs-float {
+  animation: cs-float 7.5s ease-in-out infinite;
+}
+
+/* ── Section 04：全页唯一的重渐变主卡 ─────────────────────── */
+.cs-ai {
+  background:
+    radial-gradient(
+      120% 90% at 12% 0%,
+      rgba(152, 235, 233, 0.85) 0%,
+      rgba(152, 235, 233, 0) 52%
+    ),
+    linear-gradient(158deg, #4f35f0 0%, #4229e8 42%, #2e1ca8 100%);
+  box-shadow: 0 34px 70px rgba(46, 28, 168, 0.32);
+}
+
+.cs-ai-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='0.65'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* ── Section 02：重复动作的错位堆叠 ───────────────────────── */
+/* 桌面是绝对定位的层叠；<1024 转为纵向堆叠（保留下压感） */
+.cs-rec {
+  position: absolute;
+}
+
+.cs-rec:nth-child(1) {
+  left: 0;
+  top: 0;
+  opacity: 0.55;
+  z-index: 1;
+}
+
+.cs-rec:nth-child(2) {
+  left: 16px;
+  top: 74px;
+  opacity: 0.74;
+  z-index: 2;
+}
+
+.cs-rec:nth-child(3) {
+  left: 32px;
+  top: 148px;
+  opacity: 0.9;
+  z-index: 3;
+}
+
+.cs-rec:nth-child(4) {
+  left: 48px;
+  top: 222px;
+  opacity: 1;
+  z-index: 4;
+  box-shadow: 0 22px 40px rgba(26, 26, 26, 0.13);
+}
+
+@media (max-width: 1279px) {
+  .cs-rec {
+    width: min(100%, 440px);
+  }
+}
+
+@media (max-width: 1023px) {
+  .cs-rec {
+    position: relative;
+    left: auto !important;
+    top: auto !important;
+    opacity: 1 !important;
+    z-index: auto !important;
+    width: 100% !important;
+  }
+
+  .cs-rec:nth-child(n + 2) {
+    margin-top: -58px;
+  }
+}
+
+/* ── Section 05：交付物 4 格（分栏线随列数变化） ───────────── */
+.cs-deli {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.cs-deli > * {
+  border-left: 1px solid rgba(26, 26, 26, 0.12);
+}
+
+.cs-deli > *:first-child {
+  border-left: 0;
+}
+
+@media (max-width: 1023px) {
+  .cs-deli {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cs-deli > *:nth-child(3) {
+    border-left: 0;
+  }
+
+  .cs-deli > *:nth-child(n + 3) {
+    border-top: 1px solid rgba(26, 26, 26, 0.12);
+  }
+}
+
+@media (max-width: 767px) {
+  .cs-deli {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cs-deli > * {
+    border-left: 0;
+  }
+
+  .cs-deli > * + * {
+    border-top: 1px solid rgba(26, 26, 26, 0.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .cs-float {
+    animation: none !important;
+  }
+}

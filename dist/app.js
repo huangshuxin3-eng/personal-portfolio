@@ -21,10 +21,10 @@ export function FolderIllustration(folder, instance) {
     </defs>
     <path d="M98 65H185L194 30H294Q323 30 332 63L398 70L424 87L398 322H76Z" fill="${dark}" filter="url(#${id}-grain)"/>
     <path d="m398 87 26 0-26 235h-11Z" fill="url(#${id}-side)"/>
-    <path d="m105 85 289-10 2 237-301 3Z" fill="#E6E0DC"/>
-    <path d="m93 91 292-7 9 229-299 3Z" fill="#F0EBE5"/>
-    <path d="m82 97 292-9 14 225-297 5Z" fill="#FFFCF5"/>
-    <g stroke="#756E76" stroke-width="1.6" opacity=".5"><path d="m199 99 1 14m21-15 1 14m21-15 1 14m21-15 1 14m21-15 1 14m21-15 1 14m21-15 1 14"/></g>
+    <path class="folder-paper" d="m105 85 289-10 2 237-301 3Z" fill="#E6E0DC"/>
+    <path class="folder-paper" d="m93 91 292-7 9 229-299 3Z" fill="#F0EBE5"/>
+    <path class="folder-paper" d="m82 97 292-9 14 225-297 5Z" fill="#FFFCF5"/>
+    <g class="folder-paper" stroke="#756E76" stroke-width="1.6" opacity=".5"><path d="m199 99 1 14m21-15 1 14m21-15 1 14m21-15 1 14m21-15 1 14m21-15 1 14m21-15 1 14"/></g>
     <path d="${front}" fill="url(#${id}-front)"/>
     <g clip-path="url(#${id}-clip)"><path d="${front}" fill="url(#${id}-front)" filter="url(#${id}-grain)"/></g>
   </svg>`;
@@ -83,6 +83,39 @@ let animations = [];
 let drag = null;
 /** @type {number | null} */
 let dragFrame = null;
+/** @type {{x:number,y:number,index:number} | null} */
+let activation = null;
+const entryFeedback = document.createElement('div');
+entryFeedback.className = 'entry-feedback'; entryFeedback.hidden = true;
+entryFeedback.setAttribute('role', 'status'); stage.closest('main').append(entryFeedback);
+/** @type {ReturnType<typeof setTimeout> | undefined} */
+let feedbackTimer;
+function openEntry() {
+  if (locked || drag) return;
+  if (current === 1) { location.assign('/portfolio/'); return; }
+  clearTimeout(feedbackTimer);
+  entryFeedback.textContent = current === 0 ? 'CV 暂未开放，简历正在准备中。' : 'Demo 暂未开放，演示视频正在准备中。';
+  entryFeedback.hidden = false;
+  feedbackTimer = setTimeout(() => { entryFeedback.hidden = true; }, 3000);
+}
+stage.addEventListener('click', () => {
+  const allowed = activation && activation.index === current;
+  activation = null;
+  if (allowed) openEntry();
+});
+stage.addEventListener('keydown', event => {
+  if (event.target !== stage || !['Enter', ' '].includes(event.key)) return;
+  event.preventDefault(); if (!event.repeat) openEntry();
+});
+// Hover only marks existing paper layers; SVG paths and paint order stay intact.
+const paperHover = matchMedia('(min-width: 1024px) and (hover: hover) and (pointer: fine)');
+stage.addEventListener('pointerenter', event => {
+  if (event.pointerType !== 'mouse' || !paperHover.matches || locked || drag) return;
+  // SVG transforms use viewBox units: compensate for the rendered scale to lift 15 screen px.
+  stage.style.setProperty('--paper-lift', `${15 * 460 / stage.clientWidth}px`);
+  stage.classList.add('is-paper-hover');
+});
+stage.addEventListener('pointerleave', () => stage.classList.remove('is-paper-hover'));
 // Motion refinement 1: the switch is a short, forceful lateral wipe (reference ~1.40-1.70s), not the
 // long crossfade carousel it replaces. One cut edge sweeps across the folder and both sheets stay
 // fully opaque underneath it, so the frame never empties, never blends and never flashes. Timing and
@@ -94,7 +127,7 @@ const DRAG_SPAN = 0.42;                        // pointer travel, as a fraction 
 const ease = 'cubic-bezier(.2, .88, .22, 1)';  // forceful start, decelerating, no overshoot to settle on
 const titles = [initialTitle, 'my<br>work', 'my<br>demo'];
 const labels = ['CV', 'Portfolio', 'Demo'];
-const subtitles = [initialCaption, 'Selected work.<br><span>Product thinking / Digital making</span>', 'Watch the demo.<br><span>Ideas in motion / Products in action</span>'];
+const subtitles = [initialCaption, '精选作品', '演示视频'];
 /** @type {HTMLDivElement | null} */
 let titleRoll = null;
 /** @param {number} from @param {number} to @param {number} direction */
@@ -174,6 +207,7 @@ async function settle(target, dx = 0) {
   const push = stage.clientWidth * PUSH;
   const length = direction ? duration : RETURN;
   locked = true; stage.setAttribute('aria-busy', 'true');
+  stage.classList.remove('is-paper-hover');
   // Announced before the folder starts moving, so the hand leads/keeps pace with the switch.
   emit(direction ? 'switch-start' : 'switch-cancel', { from: previous, to: target, direction, distance: push, dx, duration: length });
   if (!reduced.matches) {
@@ -248,7 +282,10 @@ window.addEventListener('keydown', event => {
   if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); if (!event.repeat) step(event.key === 'ArrowRight' ? 1 : -1); }
 });
 stage.addEventListener('pointerdown', event => {
+  activation = null;
   if (locked || drag || !event.isPrimary || event.button !== 0) return;
+  activation = { x: event.clientX, y: event.clientY, index: current };
+  stage.classList.remove('is-paper-hover');
   drag = { id: event.pointerId, startX: event.clientX, startY: event.clientY, dx: 0, axis: '', samples: [{ x: event.clientX, t: performance.now() }] };
   emit('drag-begin', {});
 });
@@ -274,6 +311,7 @@ function follow(dx) {
 window.addEventListener('pointermove', event => {
   if (!drag || drag.id !== event.pointerId) return;
   const dx = event.clientX - drag.startX, dy = event.clientY - drag.startY;
+  if (Math.max(Math.abs(dx), Math.abs(dy)) > 7) activation = null;
   if (!drag.axis && Math.max(Math.abs(dx), Math.abs(dy)) > 7) {
     drag.axis = Math.abs(dx) > Math.abs(dy) * 1.15 ? 'x' : 'y';
     if (drag.axis === 'x') { stage.setPointerCapture(event.pointerId); stage.classList.add('is-dragging'); }
@@ -287,6 +325,7 @@ window.addEventListener('pointermove', event => {
 function release(event, cancelled = false) {
   if (!drag || event.pointerId !== drag.id) return;
   const gesture = drag; drag = null;
+  if (cancelled || gesture.axis) activation = null;
   if (dragFrame !== null) { cancelAnimationFrame(dragFrame); dragFrame = null; }
   if (stage.hasPointerCapture(event.pointerId)) stage.releasePointerCapture(event.pointerId);
   stage.classList.remove('is-dragging');

@@ -57,3 +57,15 @@ review/homepage-motion-refinement-1/cancel-fix/*
 
 # Slice 2 local machine-generated evidence.
 review/homepage-motion-refinement-2/results.json
+
+# Integration build and recovery snapshot.
+/site/
+portfolio-source/.next/
+portfolio-source/out/
+review/integration-slice-1/baseline/
+!portfolio-source/public/legaltrace/*.png
+portfolio-source/*.tsbuildinfo
+review/integration-slice-1/results.json
+
+# Local generated hover verification result.
+review/hover-paper/验收结果.json
