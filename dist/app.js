@@ -95,6 +95,36 @@ const ease = 'cubic-bezier(.2, .88, .22, 1)';  // forceful start, decelerating, 
 const titles = [initialTitle, 'my<br>work', 'my<br>demo'];
 const labels = ['CV', 'Portfolio', 'Demo'];
 const subtitles = [initialCaption, 'Selected work.<br><span>Product thinking / Digital making</span>', 'Watch the demo.<br><span>Ideas in motion / Products in action</span>'];
+/** @type {HTMLDivElement | null} */
+let titleRoll = null;
+/** @param {number} from @param {number} to @param {number} direction */
+function rollTitle(from, to, direction) {
+  titleRoll?.remove();
+  const css = getComputedStyle(sticker);
+  // Preserve the original line boxes and padding; only the temporary inner content moves.
+  if (!sticker.style.height) stickerHeight = css.height;
+  sticker.style.height = stickerHeight;
+  titleRoll = document.createElement('div');
+  titleRoll.className = 'sticker-roll-window';
+  titleRoll.setAttribute('aria-hidden', 'true');
+  titleRoll.style.inset = '0';
+  const track = document.createElement('div'); track.className = 'sticker-roll-track';
+  [from, to].forEach((index, i) => {
+    const face = document.createElement('div'); face.className = 'sticker-roll-face';
+    face.style.padding = css.padding;
+    const prefix = /** @type {HTMLElement} */ (sticker.querySelector(':scope > span')).cloneNode(true);
+    const heading = document.createElement('strong'); heading.innerHTML = titles[index];
+    face.append(prefix, heading);
+    face.style.transform = `translateY(${i * direction * 100}%)`;
+    track.append(face);
+  });
+  titleRoll.append(track); sticker.append(titleRoll); sticker.classList.add('is-rolling');
+  // Same animation batch, duration, easing and lock as the folder wipe; no separate timer.
+  animations.push(track.animate([
+    { transform: 'translateY(0%)' },
+    { transform: `translateY(${-direction * 100}%)` }
+  ], { duration, easing: ease, fill: 'both' }));
+}
 /** @param {number} direction @param {number} t 0..1 @returns {{ from: string, to: string, incoming: string, incomingEnd: string }} */
 // One cut edge sweeping from the entry side to the exit side is the whole transition. `t` is the eased
 // advance. The outgoing drifts by PUSH while it is cut, so its own cut is offset by that drift
@@ -120,6 +150,7 @@ function parallax(dx) {
   backgrounds.forEach((el, i) => { el.style.translate = `${dx * [0.018, -0.012, 0.008, -0.022, 0.014][i]}px 0`; });
 }
 function reset() {
+  titleRoll?.remove(); titleRoll = null; sticker.classList.remove('is-rolling');
   slides.forEach((slide, i) => { slide.toggleAttribute('hidden', i !== current); slide.style.removeProperty('transform'); slide.style.removeProperty('opacity'); slide.style.removeProperty('clip-path'); slide.style.removeProperty('z-index'); });
   backgrounds.forEach(el => el.style.removeProperty('translate'));
   stage.classList.remove('is-dragging');
@@ -148,6 +179,7 @@ async function settle(target, dx = 0) {
   if (!reduced.matches) {
     const outgoing = slides[previous], incoming = slides[target];
     if (direction) {
+      rollTitle(previous, target, direction);
       incoming.removeAttribute('hidden');
       incoming.style.zIndex = '2'; // the arriving sheet is the one that carries the cut
       // Seeded from the live drag pose so a release continues instead of jumping to a fresh start.
@@ -184,7 +216,7 @@ async function settle(target, dx = 0) {
     });
     // Text switches at the midpoint without changing the layout.
     if (direction) {
-      const text = [strong, number, caption];
+      const text = [number, caption];
       const fades = text.map(el => el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 120, fill: 'both' }));
       animations.push(...fades);
       await Promise.all(fades.map(a => a.finished.catch(() => {})));

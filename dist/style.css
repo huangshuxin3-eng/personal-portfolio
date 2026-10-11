@@ -12,6 +12,13 @@ body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Bri
 .title-sticker { flex: none; margin: 0; width: 110px; padding: 9px 12px 10px; background: var(--blue); color: var(--yellow); transform: rotate(-3deg); font-weight: 800; line-height: .84; letter-spacing: -.05em; }
 .title-sticker > span { display: block; font-size: 12px; line-height: 1.05; letter-spacing: -.04em; margin-bottom: 4px; }
 .title-sticker strong { font-size: 36px; font-weight: 800; }
+/* Temporary text-only roller; the resting sticker keeps its original flow and dimensions. */
+.title-sticker.is-rolling { position: relative; }
+.title-sticker.is-rolling > span, .title-sticker.is-rolling > strong { visibility: hidden; }
+.sticker-roll-window { position: absolute; overflow: hidden; pointer-events: none; }
+.sticker-roll-track, .sticker-roll-face { position: absolute; inset: 0; }
+.sticker-roll-face { overflow: hidden; }
+.sticker-roll-face > span { display: block; font-size: 12px; line-height: 1.05; letter-spacing: -.04em; margin-bottom: 4px; }
 .main-folder { flex: none; width: min(529px, 50.6vw, calc((100svh - 400px) * 1.314)); }
 .folder-illustration { display: block; width: 100%; height: auto; overflow: visible; }
 .folder-caption { display: flex; align-items: baseline; gap: 22px; font-size: 11px; flex: none; }
@@ -36,6 +43,7 @@ body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Bri
   .title-sticker { width: 99px; padding: 8px 10px 9px; }
   .title-sticker strong { font-size: 33px; }
   .title-sticker > span { font-size: 11px; }
+  .sticker-roll-face > span { font-size: 11px; }
   .main-folder { width: min(379.5px, 98.9vw, calc((100svh - 340px) * 1.314)); }
   .folder-caption { gap: 16px; font-size: 10px; }
   .folder-caption p span { font-size: 9px; }

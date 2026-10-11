@@ -54,3 +54,6 @@ review/homepage-motion-refinement-1/recordings/
 review/homepage-motion-refinement-1/cancel-fix/*
 !review/homepage-motion-refinement-1/cancel-fix/targeted.mjs
 !review/homepage-motion-refinement-1/cancel-fix/修复说明.md
+
+# Slice 2 local machine-generated evidence.
+review/homepage-motion-refinement-2/results.json
