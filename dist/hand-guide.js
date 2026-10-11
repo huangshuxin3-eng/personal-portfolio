@@ -11,9 +11,10 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)');
 
 const INTERACTION = 'folder:interaction';
 const INTRO = 3400; // frozen Step 2 length
-const SWIPE = 640; // matches the carousel's own switch duration
+const SWIPE = 380; // fallback only: the carousel publishes its real switch duration on the event
 const SPRING = 520;
 const TAIL = 140; // extra convergence time after a scripted shape ends
+const DRAG_SWEEP = 1.35; // maps the carousel's normalised drag progress onto the hand's own coefficient space
 
 /**
  * @typedef {{x: number, y: number, rot: number, opacity: number}} Pose
@@ -30,7 +31,7 @@ let raf = 0, lastFrame = 0, orphanAt = 0;
 let interacted = false, introDone = false, reducedDismissed = false;
 /** @type {Pose} */ let pose = { ...BELOW };
 /** @type {Gesture | null} */ let gesture = null;
-let dragging = false, dragOffset = 0;
+let dragging = false, dragProgress = 0, dragSign = 0;
 let rampStart = 0; // responsiveness fades in so a takeover starts from the live pose, never with a snap
 
 const clamp = (/** @type {number} */ v, /** @type {number} */ a, /** @type {number} */ b) => Math.min(b, Math.max(a, v));
@@ -97,8 +98,9 @@ function readPose() {
 /** @returns {Pose} */
 function targetPose() {
   if (dragging) {
-    // Horizontal offset is tied to real drag progress, so reversing the drag reverses the hand.
-    const p = clamp(dragOffset / (visibleWidth * .45), -1.4, 1.4);
+    // Driven by the carousel's normalised drag progress, so the hand keeps the same sweep whatever
+    // lateral travel the carousel's wipe uses. Reversing the drag reverses the sign.
+    const p = clamp(dragSign * dragProgress * DRAG_SWEEP, -1.4, 1.4);
     return { x: READY.x + p * .20, y: READY.y + Math.min(1, Math.abs(p)) * .03, rot: p * 15, opacity: 1 };
   }
   if (gesture) {
@@ -174,7 +176,9 @@ function onDragMove(detail) {
   if (reduce.matches) return;
   if (motion) takeOverIntro();
   gesture = null; dragging = true;
-  dragOffset = Number(detail.offset) || 0;
+  // The emitted offset sign equals the drag sign, which is opposite the target's direction.
+  dragSign = -Math.sign(Number(detail.direction) || 0);
+  dragProgress = clamp(Number(detail.progress) || 0, 0, 1);
   show(); startLoop(); setState('interactive');
 }
 /** @param {any} detail */
@@ -195,7 +199,7 @@ function onSwitchStart(detail) {
   if (!direction) return;
   // Next folder: the hand sweeps left, pushing the current folder away. Previous: it sweeps right.
   const sign = -direction;
-  startGesture(sign, detail.dx ? .20 : .30, SWIPE);
+  startGesture(sign, detail.dx ? .20 : .30, Number(detail.duration) || SWIPE);
   setState('swipe');
 }
 function onSwitchCancel() {

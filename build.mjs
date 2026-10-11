@@ -12,5 +12,5 @@ if(probe.error){
 }else for(const script of scripts){const check=spawnSync(process.execPath,['--check',script],{encoding:'utf8'});if(check.status!==0)throw Error(check.stderr);}
 const assets=['style.css','app.js','hand-guide.css','hand-guide.js','retro-hand.svg'];
 const html=await readFile('dist/index.html','utf8');for(const asset of assets){if(!html.includes(asset))throw Error('Missing '+asset);await readFile('dist/'+asset);}
-const output='review/homepage-hand-sync/build';await mkdir(output,{recursive:true});for(const asset of ['index.html',...assets])await copyFile('dist/'+asset,output+'/'+asset);
+const output='review/homepage-motion-refinement-1/build';await mkdir(output,{recursive:true});for(const asset of ['index.html',...assets])await copyFile('dist/'+asset,output+'/'+asset);
 console.log('BUILD PASS: buildless static site; 6 verified source assets copied to '+output);

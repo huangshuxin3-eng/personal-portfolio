@@ -43,3 +43,14 @@ review/**/build/
 Thumbs.db
 .DS_Store
 desktop.ini
+
+# Motion Refinement Slice 1 local evidence; keep only selected scripts and acceptance notes.
+review/homepage-motion-refinement-1/checkpoint/
+review/homepage-motion-refinement-1/checkpoint-sha256.json
+review/homepage-motion-refinement-1/cap-mask.mjs
+review/homepage-motion-refinement-1/*.log
+review/homepage-motion-refinement-1/results.json
+review/homepage-motion-refinement-1/recordings/
+review/homepage-motion-refinement-1/cancel-fix/*
+!review/homepage-motion-refinement-1/cancel-fix/targeted.mjs
+!review/homepage-motion-refinement-1/cancel-fix/修复说明.md

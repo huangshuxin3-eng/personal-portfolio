@@ -83,16 +83,36 @@ let animations = [];
 let drag = null;
 /** @type {number | null} */
 let dragFrame = null;
-const duration = 640;
-const ease = 'cubic-bezier(.22, 1.08, .36, 1)';
+// Motion refinement 1: the switch is a short, forceful lateral wipe (reference ~1.40-1.70s), not the
+// long crossfade carousel it replaces. One cut edge sweeps across the folder and both sheets stay
+// fully opaque underneath it, so the frame never empties, never blends and never flashes. Timing and
+// travel live here, and the hand gesture reads `duration` / `distance` straight off the emitted event.
+const duration = 380;                          // main wipe stage (was 640)
+const RETURN = 420;                            // a release that commits nothing settles back (was 550)
+const PUSH = 0.09;                             // the outgoing sheet's own drift, as a fraction of the stage
+const DRAG_SPAN = 0.42;                        // pointer travel, as a fraction of the stage, that completes the wipe
+const ease = 'cubic-bezier(.2, .88, .22, 1)';  // forceful start, decelerating, no overshoot to settle on
 const titles = [initialTitle, 'my<br>work', 'my<br>demo'];
 const labels = ['CV', 'Portfolio', 'Demo'];
 const subtitles = [initialCaption, 'Selected work.<br><span>Product thinking / Digital making</span>', 'Watch the demo.<br><span>Ideas in motion / Products in action</span>'];
-function travel() { return stage.clientWidth * 1.14; }
-/** @param {SVGSVGElement} slide @param {number} x @param {number} scale @param {number} rotate @param {number} opacity */
-function pose(slide, x, scale = 1, rotate = 0, opacity = 1) {
-  slide.style.transform = `translateX(${x}px) scale(${scale}) rotate(${rotate}deg)`;
-  slide.style.opacity = String(opacity);
+/** @param {number} direction @param {number} t 0..1 @returns {{ from: string, to: string, incoming: string, incomingEnd: string }} */
+// One cut edge sweeping from the entry side to the exit side is the whole transition. `t` is the eased
+// advance. The outgoing drifts by PUSH while it is cut, so its own cut is offset by that drift
+// (`100 * t * (1 - PUSH)`) — that keeps both cut edges on a single line and leaves no seam to flash.
+function cuts(direction, t) {
+  const out = (100 * t * (1 - PUSH)).toFixed(4), inc = (100 * (1 - t)).toFixed(4);
+  return direction > 0
+    ? { from: `inset(0 ${out}% 0 0)`, to: `inset(0 ${(100 * (1 - PUSH)).toFixed(4)}% 0 0)`, incoming: `inset(0 0 0 ${inc}%)`, incomingEnd: 'inset(0 0 0 0%)' }
+    : { from: `inset(0 0 0 ${out}%)`, to: `inset(0 0 0 ${(100 * (1 - PUSH)).toFixed(4)}%)`, incoming: `inset(0 ${inc}% 0 0)`, incomingEnd: 'inset(0 0% 0 0)' };
+}
+/** @param {number} direction @param {number} t 0..1 */
+// Live drag pose: the outgoing only drifts, everything else is the shared cut. Reversing the drag
+// reverses the drift and rewinds the edge, exactly like dragging the sheet back.
+function wipe(from, to, direction, t) {
+  const { from: cutFrom, incoming } = cuts(direction, t);
+  from.style.transform = `translateX(${(-direction * stage.clientWidth * PUSH * t).toFixed(2)}px)`;
+  from.style.clipPath = cutFrom;
+  to.style.clipPath = incoming;
 }
 /** @param {number} dx */
 function parallax(dx) {
@@ -100,7 +120,7 @@ function parallax(dx) {
   backgrounds.forEach((el, i) => { el.style.translate = `${dx * [0.018, -0.012, 0.008, -0.022, 0.014][i]}px 0`; });
 }
 function reset() {
-  slides.forEach((slide, i) => { slide.toggleAttribute('hidden', i !== current); slide.style.removeProperty('transform'); slide.style.removeProperty('opacity'); });
+  slides.forEach((slide, i) => { slide.toggleAttribute('hidden', i !== current); slide.style.removeProperty('transform'); slide.style.removeProperty('opacity'); slide.style.removeProperty('clip-path'); slide.style.removeProperty('z-index'); });
   backgrounds.forEach(el => el.style.removeProperty('translate'));
   stage.classList.remove('is-dragging');
   stage.removeAttribute('aria-busy');
@@ -119,28 +139,48 @@ function updateText() {
 async function settle(target, dx = 0) {
   if (locked) return;
   target = Math.max(0, Math.min(folders.length - 1, target));
-  const previous = current, direction = Math.sign(target - previous), distance = travel();
+  const previous = current, direction = Math.sign(target - previous);
+  const push = stage.clientWidth * PUSH;
+  const length = direction ? duration : RETURN;
   locked = true; stage.setAttribute('aria-busy', 'true');
   // Announced before the folder starts moving, so the hand leads/keeps pace with the switch.
-  emit(direction ? 'switch-start' : 'switch-cancel', { from: previous, to: target, direction, distance, dx, duration: direction ? duration : 550 });
+  emit(direction ? 'switch-start' : 'switch-cancel', { from: previous, to: target, direction, distance: push, dx, duration: length });
   if (!reduced.matches) {
-    const outgoing = slides[previous];
-    const from = { transform: outgoing.style.transform || 'translateX(0px) scale(1) rotate(0deg)', opacity: outgoing.style.opacity || '1' };
-    animations.push(outgoing.animate([from, { transform: `translateX(${-direction * distance}px) scale(${direction ? .9 : 1}) rotate(${-direction * 8}deg)`, opacity: direction ? 0 : 1 }], { duration: direction ? duration : 550, easing: ease, fill: 'both' }));
+    const outgoing = slides[previous], incoming = slides[target];
     if (direction) {
-      const incoming = slides[target]; incoming.removeAttribute('hidden');
-      const progress = Math.min(1, Math.abs(dx) / distance);
+      incoming.removeAttribute('hidden');
+      incoming.style.zIndex = '2'; // the arriving sheet is the one that carries the cut
+      // Seeded from the live drag pose so a release continues instead of jumping to a fresh start.
+      const live = cuts(direction, Math.min(1, Math.abs(dx) / (stage.clientWidth * DRAG_SPAN)));
+      const settled = cuts(direction, 1);
+      animations.push(outgoing.animate([
+        { transform: outgoing.style.transform || 'translateX(0px)' },
+        { transform: `translateX(${(-direction * push).toFixed(2)}px)` }
+      ], { duration, easing: ease, fill: 'both' }));
+      animations.push(outgoing.animate([
+        { clipPath: outgoing.style.clipPath || live.from },
+        { clipPath: settled.to }
+      ], { duration, easing: ease, fill: 'both' }));
       animations.push(incoming.animate([
-        { transform: incoming.style.transform || `translateX(${direction * distance + dx}px) scale(${.9 + progress * .1}) rotate(${direction * 8 * (1 - progress)}deg)`, opacity: incoming.style.opacity || String(progress) },
-        { transform: 'translateX(0px) scale(1) rotate(0deg)', opacity: 1 }
+        { clipPath: incoming.style.clipPath || live.incoming },
+        { clipPath: settled.incomingEnd }
       ], { duration, easing: ease, fill: 'both' }));
     }
-    if (!direction) slides.forEach((slide, i) => {
-      if (i !== current && !slide.hasAttribute('hidden')) animations.push(slide.animate([{ transform: slide.style.transform, opacity: slide.style.opacity }, { transform: 'translateX(' + (i > current ? distance : -distance) + 'px) scale(.9)', opacity: 0 }], { duration: 550, easing: ease, fill: 'both' }));
-    });
+    if (!direction) {
+      // Nothing is arriving, so the wipe only rewinds: both sheets return to the resting cut state.
+      const rest = cuts(1, 0);
+      animations.push(outgoing.animate([
+        { transform: outgoing.style.transform || 'translateX(0px)', clipPath: outgoing.style.clipPath || rest.from },
+        // The current sheet reopens; only the uncommitted incoming sheet closes.
+        { transform: 'translateX(0px)', clipPath: rest.from }
+      ], { duration: RETURN, easing: ease, fill: 'both' }));
+      slides.forEach((slide, i) => {
+        if (i !== current && !slide.hasAttribute('hidden')) animations.push(slide.animate([{ transform: slide.style.transform, clipPath: slide.style.clipPath }, { transform: 'translateX(0px)', clipPath: rest.incoming }], { duration: RETURN, easing: ease, fill: 'both' }));
+      });
+    }
     backgrounds.forEach((el, i) => {
       const offset = -direction * [11, -7, 4, -13, 8][i];
-      animations.push(el.animate([{ translate: el.style.translate || '0px 0' }, { translate: `${offset}px 0`, offset: .45 }, { translate: '0px 0' }], { duration: direction ? duration : 550, easing: ease, fill: 'both' }));
+      animations.push(el.animate([{ translate: el.style.translate || '0px 0' }, { translate: `${offset}px 0`, offset: .45 }, { translate: '0px 0' }], { duration: length, easing: ease, fill: 'both' }));
     });
     // Text switches at the midpoint without changing the layout.
     if (direction) {
@@ -182,16 +222,22 @@ stage.addEventListener('pointerdown', event => {
 });
 /** @param {number} dx */
 function follow(dx) {
-  const direction = dx < 0 ? 1 : -1, target = current + direction, distance = travel();
+  const direction = dx < 0 ? 1 : -1, target = current + direction, span = stage.clientWidth * DRAG_SPAN;
   const hasNext = target >= 0 && target < folders.length;
-  const offset = hasNext ? Math.sign(dx) * distance * (1 - Math.exp(-Math.abs(dx) / distance)) : dx * .2;
-  const progress = Math.min(.92, Math.abs(offset) / distance);
+  // Direct, two-way progress: reversing the drag rewinds the cut and the drift along with it.
+  const progress = Math.min(hasNext ? 1 : .4, Math.abs(dx) / span);
+  const drift = -direction * stage.clientWidth * PUSH * progress;
   slides.forEach((s, i) => { s.toggleAttribute('hidden', i !== current && i !== target); });
-  pose(slides[current], offset, 1 - progress * .08, offset / distance * 8, 1 - progress * .65);
-  if (hasNext) pose(slides[target], direction * distance + offset, .9 + progress * .1, direction * 8 * (1 - progress), progress);
-  parallax(offset);
-  // Continuous, two-way drag progress: the hand's horizontal offset follows this, not a fixed timeline.
-  emit('drag-move', { offset, progress, direction, to: hasNext ? target : current, distance, atBoundary: !hasNext });
+  if (hasNext) wipe(slides[current], slides[target], direction, progress);
+  else {
+    // At a boundary nothing arrives: the sheet only resists, and no cut is opened.
+    slides[current].style.transform = `translateX(${drift.toFixed(2)}px)`;
+    slides[current].style.removeProperty('clip-path');
+    if (slides[target]) slides[target].style.clipPath = cuts(1, 0).incoming;
+  }
+  parallax(drift);
+  // Published for the hand: it tracks this drag progress, not a timeline of its own.
+  emit('drag-move', { offset: drift, progress, direction, to: hasNext ? target : current, distance: span, atBoundary: !hasNext });
 }
 window.addEventListener('pointermove', event => {
   if (!drag || drag.id !== event.pointerId) return;
