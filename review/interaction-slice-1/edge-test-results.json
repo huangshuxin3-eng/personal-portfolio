@@ -1,0 +1,7 @@
+{
+  "checks": [
+    "keyboard input during animation cannot skip a folder",
+    "short fast flick commits by velocity below distance threshold",
+    "same distance held before release rebounds without velocity"
+  ]
+}

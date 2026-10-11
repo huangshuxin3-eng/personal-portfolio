@@ -1,0 +1,64 @@
+{
+  "checks": [
+    "desktop: resting homepage pixel-identical to the pre-change checkpoint",
+    "desktop: drag left is tracked by the hand (151.4→56.1), reversing the drag reverses the hand (→128.7), no horizontal overflow",
+    "desktop: drag right is tracked by the hand (248.9→284.7) and returns to CV",
+    "desktop: wheel switch drives one synchronised hand slide (-71.4→182.6) that exits on its own",
+    "desktop: boundary arrow press plays no switch gesture",
+    "desktop: rapid input produced 1 switch(es) for 6 presses, no stacked gesture, no orphan foreground",
+    "desktop: foreground stays pointer-events:none and returning to CV reproduces the checkpoint frame exactly",
+    "desktop: zero JavaScript errors",
+    "wide: resting homepage pixel-identical to the pre-change checkpoint",
+    "wide: drag left is tracked by the hand (372.2→276.2), reversing the drag reverses the hand (→349.4), no horizontal overflow",
+    "wide: drag right is tracked by the hand (469.8→505.7) and returns to CV",
+    "wide: wheel switch drives one synchronised hand slide (190.7→400.3) that exits on its own",
+    "wide: boundary arrow press plays no switch gesture",
+    "wide: rapid input produced 1 switch(es) for 6 presses, no stacked gesture, no orphan foreground",
+    "wide: foreground stays pointer-events:none and returning to CV reproduces the checkpoint frame exactly",
+    "wide: zero JavaScript errors",
+    "mobile: resting homepage pixel-identical to the pre-change checkpoint",
+    "mobile: drag left is tracked by the hand (-129.7→-194), reversing the drag reverses the hand (→-145.3), no horizontal overflow",
+    "mobile: drag right is tracked by the hand (-61→-36.1) and returns to CV",
+    "mobile: wheel switch drives one synchronised hand slide (-215.3→-102.5) that exits on its own",
+    "mobile: boundary arrow press plays no switch gesture",
+    "mobile: rapid input produced 1 switch(es) for 6 presses, no stacked gesture, no orphan foreground",
+    "mobile: foreground stays pointer-events:none and returning to CV reproduces the checkpoint frame exactly",
+    "mobile: zero JavaScript errors",
+    "desktop: reduced motion shows the frozen static hand, resizes with it, dismisses on first input and never replays",
+    "mobile: reduced motion shows the frozen static hand, resizes with it, dismisses on first input and never replays",
+    "toggling reduced motion mid-intro replaces the motion with the approved static pose",
+    "the small yellow hand is hidden while the big hand is on screen and restored once it has exited"
+  ],
+  "measurements": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900,
+      "folderWidth": 687.6875,
+      "folderVisibleWidth": 580.0494565217391,
+      "handWidth": 570.049,
+      "handWidthExpected": 570.0486038230883,
+      "handPointerEvents": "none"
+    },
+    {
+      "name": "wide",
+      "width": 1920,
+      "height": 1080,
+      "folderWidth": 714.140625,
+      "folderVisibleWidth": 602.3620923913044,
+      "handWidth": 591.977,
+      "handWidthExpected": 591.976539074213,
+      "handPointerEvents": "none"
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "folderWidth": 379.5,
+      "folderVisibleWidth": 320.1,
+      "handWidth": 314.581,
+      "handWidthExpected": 314.58103448275864,
+      "handPointerEvents": "none"
+    }
+  ]
+}

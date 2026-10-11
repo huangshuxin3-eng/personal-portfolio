@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#F7F4F0" />
+    <meta name="description" content="HUANG SHUXIN — AI Product Manager / AI Product Operations. 数字文具个人作品集。" />
+    <title>HUANG SHUXIN — My digital stationery</title>
+    <!-- The font stylesheet must not block rendering: a blocking remote @import also blocked the
+         deferred module that draws the folders, leaving the canvas blank until it returned. -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,800&amp;family=Space+Grotesk:wght@400;600&amp;family=Space+Mono:wght@400;700&amp;display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,800&amp;family=Space+Grotesk:wght@400;600&amp;family=Space+Mono:wght@400;700&amp;display=swap"
+      />
+    </noscript>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./hand-guide.css" />
+  </head>
+  <body>
+    <main class="stationery" aria-labelledby="folder-title">
+      <header class="identity"><span>HUANG SHUXIN</span><span>AI PRODUCT PORTFOLIO</span></header>
+      <div class="floating-folder floating-one" data-folder="cv" aria-hidden="true"></div>
+      <div class="floating-folder floating-two" data-folder="cv" aria-hidden="true"></div>
+      <div class="floating-folder floating-three" data-folder="cv" aria-hidden="true"></div>
+      <div class="floating-folder floating-four" data-folder="cv" aria-hidden="true"></div>
+      <div class="floating-folder floating-five" data-folder="cv" aria-hidden="true"></div>
+      <div class="focus-composition">
+        <h1 class="title-sticker" id="folder-title"><span>hello, here's</span><strong>my<br />cv</strong></h1>
+        <div class="main-folder" data-folder="cv" role="img" aria-label="青色到薰衣草紫的颗粒文件夹，内部露出白色纸张，右侧为电光蓝背板"></div>
+        <div class="folder-caption"><span>01 / 03</span><p>A little about me.<br /><span>AI Product Manager / AI Product Operations</span></p></div>
+      </div>
+      <div class="swipe-note" aria-hidden="true"><svg viewBox="0 0 142 100" fill="none"><path d="M23 96c-10-12-19-25-14-34 3-6 10-5 16 0l17 13-7-30c-2-9 2-15 9-14 5 1 8 7 10 14l4 12 7-41C67 5 73 2 80 4c7 2 8 8 7 15l-3 33c5-7 14-8 18-2 7-5 16 0 17 8 7-2 12 4 12 13-1 10-5 18-11 25" fill="#FFD02C" stroke="#262122" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M70 16c2-5 7-5 9-3l-2 9c-1 3-7 3-8 0l1-6Z" fill="#262122"/><path d="m92 70 9 8m8-12 8 8M34 82l14 8" stroke="#262122" stroke-width="3" stroke-linecap="round"/><path d="m110 14 20 0-6-6m6 6-6 6" stroke="#262122" stroke-width="2.5" stroke-linecap="round"/></svg><span>drag or scroll to explore →</span></div>
+      <footer class="canvas-footer"><span>CV · SELECTED WORK · DEMO</span><span>静态视觉审查 · 01</span></footer>
+      <div class="hand-guide-anchor" aria-hidden="true" hidden><div class="hand-guide-actor"><img src="./retro-hand.svg" alt="" draggable="false" /></div></div>
+    </main>
+    <script type="module" src="./app.js"></script>
+    <script type="module" src="./hand-guide.js"></script>
+  </body>
+</html>

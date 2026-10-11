@@ -1,0 +1,125 @@
+[
+  {
+    "name": "desktop",
+    "width": 1440,
+    "height": 900,
+    "folder": {
+      "x": 376.15625,
+      "y": 172.171875,
+      "width": 687.6875,
+      "height": 523.234375,
+      "bottom": 695.40625
+    },
+    "folderVisibleWidth": 580.0494565217391,
+    "handBox": {
+      "x": 266.716796875,
+      "y": 438.40191650390625,
+      "width": 731.2403564453125,
+      "height": 852.3324584960938,
+      "bottom": 1290.734375
+    },
+    "handBBox": {
+      "x": 0,
+      "y": 0,
+      "width": 480,
+      "height": 620
+    },
+    "transformedBBox": {
+      "minX": 266.7219316121573,
+      "maxX": 997.9520436584921,
+      "minY": 438.4031818535314,
+      "maxY": 1290.7331528518441
+    },
+    "pointerEvents": "none",
+    "overflow": false,
+    "visibleHandPixels": {
+      "x": 355,
+      "y": 553,
+      "width": 529,
+      "height": 347
+    },
+    "visibleWidthRatio": 0.9119912001506618
+  },
+  {
+    "name": "wide",
+    "width": 1920,
+    "height": 1080,
+    "folder": {
+      "x": 602.921875,
+      "y": 252.09375,
+      "width": 714.140625,
+      "height": 543.359375,
+      "bottom": 795.453125
+    },
+    "folderVisibleWidth": 602.3620923913044,
+    "handBox": {
+      "x": 489.283203125,
+      "y": 600.6404418945312,
+      "width": 759.3642578125,
+      "height": 885.1226196289062,
+      "bottom": 1485.7630615234375
+    },
+    "handBBox": {
+      "x": 0,
+      "y": 0,
+      "width": 480,
+      "height": 620
+    },
+    "transformedBBox": {
+      "minX": 489.2837126233428,
+      "maxX": 1248.6470121394905,
+      "minY": 600.640586628699,
+      "maxY": 1485.7629145953697
+    },
+    "pointerEvents": "none",
+    "overflow": false,
+    "visibleHandPixels": {
+      "x": 581,
+      "y": 720,
+      "width": 550,
+      "height": 360
+    },
+    "visibleWidthRatio": 0.9130720657014899
+  },
+  {
+    "name": "mobile",
+    "width": 390,
+    "height": 844,
+    "folder": {
+      "x": 5.25,
+      "y": 275.640625,
+      "width": 379.5,
+      "height": 288.75,
+      "bottom": 564.390625
+    },
+    "folderVisibleWidth": 320.1,
+    "handBox": {
+      "x": -55.14323425292969,
+      "y": 491.7468566894531,
+      "width": 403.533447265625,
+      "height": 470.3617858886719,
+      "bottom": 962.108642578125
+    },
+    "handBBox": {
+      "x": 0,
+      "y": 0,
+      "width": 480,
+      "height": 620
+    },
+    "transformedBBox": {
+      "minX": -55.142503923180406,
+      "maxX": 348.38950939865686,
+      "minY": 491.74704994285247,
+      "maxY": 962.1084636009628
+    },
+    "pointerEvents": "none",
+    "overflow": false,
+    "visibleHandPixels": {
+      "x": 0,
+      "y": 555,
+      "width": 287,
+      "height": 289
+    },
+    "visibleWidthRatio": 0.8965948141205873
+  }
+]

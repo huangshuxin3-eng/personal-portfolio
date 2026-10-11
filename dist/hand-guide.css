@@ -1,0 +1,13 @@
+/* The approved hand is a viewport-clipped foreground; no geometry changes. */
+.hand-guide-anchor { position: absolute; left: 50%; transform: translateX(-50%); z-index: 5; pointer-events: none; user-select: none; }
+.hand-guide-anchor[hidden] { display: none; }
+.hand-guide-actor { width: 100%; transform-origin: 50% 90%; opacity: 0; pointer-events: none; will-change: transform, opacity; }
+.hand-guide-actor img { display: block; width: 100%; height: auto; pointer-events: none; }
+/* Keep information readable above the temporary foreground, without moving it. */
+.stationery.hand-guiding .focus-composition { z-index: auto; }
+.stationery.hand-guiding .title-sticker { position: relative; z-index: 3; }
+.stationery.hand-guiding .main-folder { z-index: 3; }
+.stationery.hand-guiding .folder-caption { position: relative; z-index: 6; }
+.stationery.hand-guiding .swipe-note, .stationery.hand-guiding .canvas-footer { z-index: 6; }
+.stationery.hand-guiding .swipe-note svg { visibility: hidden; }
+@media (prefers-reduced-motion: reduce) { .hand-guide-actor { will-change: auto; } }

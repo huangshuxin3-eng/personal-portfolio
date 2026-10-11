@@ -1,0 +1,2 @@
+NOTE: node --check cannot spawn here; syntax verified in-process with the local TypeScript parser.
+BUILD PASS: buildless static site; 6 verified source assets copied to review/homepage-hand-sync/build

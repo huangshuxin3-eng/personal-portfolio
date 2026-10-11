@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 620" fill="none" role="img" aria-labelledby="hand-title hand-desc">
+  <title id="hand-title">Retro swipe hand — original layered vector study</title>
+  <desc id="hand-desc">Exaggerated pointing finger, folded knuckles, sweeping thumb, black nails, yellow-to-orange print shading and a long wrist for foreground cropping.</desc>
+  <defs>
+    <linearGradient id="palm-ink" x1="101" y1="226" x2="452" y2="480" gradientUnits="userSpaceOnUse"><stop stop-color="#FFE65D"/><stop offset=".46" stop-color="#F5D346"/><stop offset=".78" stop-color="#EFB547"/><stop offset="1" stop-color="#D9763B"/></linearGradient>
+    <linearGradient id="finger-ink" x1="305" y1="0" x2="391" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#FFE868"/><stop offset=".52" stop-color="#FFD553"/><stop offset="1" stop-color="#E38B3B"/></linearGradient>
+    <linearGradient id="thumb-ink" x1="60" y1="330" x2="153" y2="417" gradientUnits="userSpaceOnUse"><stop stop-color="#F8D851"/><stop offset=".52" stop-color="#F4C340"/><stop offset="1" stop-color="#DD843B"/></linearGradient>
+    <linearGradient id="wrist-ink" x1="234" y1="423" x2="440" y2="575" gradientUnits="userSpaceOnUse"><stop stop-color="#EACA43" stop-opacity="0"/><stop offset=".7" stop-color="#C86731" stop-opacity=".15"/><stop offset="1" stop-color="#BB572F" stop-opacity=".36"/></linearGradient>
+    <linearGradient id="finger-fade" x1="0" y1="260" x2="0" y2="425" gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="1" stop-color="black"/></linearGradient><mask id="finger-join"><path d="M250 0H420V440H250Z" fill="url(#finger-fade)"/></mask>
+    <path id="hand-silhouette" d="M192 606 L187 514 C180 482 160 457 139 439 C120 425 96 418 76 407 C55 397 31 390 22 374 C11 357 17 338 33 330 C51 320 71 327 92 335 L125 348 C138 326 139 302 154 280 C167 259 188 247 208 249 C222 250 233 257 246 269 C260 250 281 252 297 268 L305 121 C306 83 306 49 322 31 C334 17 352 16 367 24 C386 34 393 53 391 77 L375 322 C393 319 412 327 422 343 C444 342 459 358 460 380 C478 386 481 405 475 425 C478 468 457 514 428 549 L420 606 Z"/>
+    <clipPath id="hand-crop"><use href="#hand-silhouette"/></clipPath>
+    <filter id="print-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".79" numOctaves="3" seed="31" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="linear" slope="1.9" intercept="-.4"/><feFuncG type="linear" slope="1.9" intercept="-.4"/><feFuncB type="linear" slope="1.9" intercept="-.4"/></feComponentTransfer></filter>
+    <filter id="drawn-edge" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".08" numOctaves="2" seed="7" result="paper"/><feDisplacementMap in="SourceGraphic" in2="paper" scale="2.2" xChannelSelector="R" yChannelSelector="G"/></filter>
+  </defs>
+  <g id="hand-art" stroke-linecap="round" stroke-linejoin="round">
+    <g id="palm"><use href="#hand-silhouette" fill="url(#palm-ink)"/></g>
+    <g id="folded-fingers">
+      <path d="M128 350 C141 321 144 295 164 274 C182 255 202 251 221 260 C246 271 259 292 273 315 C286 335 301 342 315 346 C297 367 274 383 249 384 C216 385 193 369 168 360 Z" fill="#F4D647"/>
+      <path d="M246 269 C259 252 281 253 297 268 L293 308 C280 291 264 279 246 269 Z" fill="#E5B640"/>
+      <path d="M125 348 C134 330 139 306 153 282 C168 258 190 246 208 250 C225 252 239 263 253 280" stroke="#14120F" stroke-width="6.8" filter="url(#drawn-edge)"/>
+      <path d="M246 269 C261 252 280 253 297 268" stroke="#15120F" stroke-width="6.2"/>
+      <path d="M375 322 C389 327 404 338 409 353 L417 376 M404 330 C424 334 436 348 440 367 L443 390 M437 350 C456 357 460 377 463 395" stroke="#13110E" stroke-width="6" filter="url(#drawn-edge)"/>
+      <path d="M378 348 C409 367 422 398 421 424" stroke="#B86F30" stroke-opacity=".45" stroke-width="14"/>
+    </g>
+    <g id="thumb">
+      <path d="M178 357 C151 354 118 341 92 335 C71 327 51 320 33 330 C17 338 11 357 22 374 C31 390 55 397 76 407 C105 421 129 427 143 440 C140 417 151 406 174 402 C191 400 206 389 216 377 Z" fill="url(#thumb-ink)"/>
+      <path d="M30 366 C41 355 59 358 74 369 C88 379 96 393 92 402 C75 401 57 392 43 388 C32 383 25 376 30 366 Z" fill="#11100D"/>
+      <path d="M27 363 C41 357 52 356 61 361" stroke="#31261B" stroke-width="2.5" opacity=".45"/>
+      <path d="M122 347 C151 360 178 377 210 382 C231 384 252 374 271 353" stroke="#14120F" stroke-width="7" filter="url(#drawn-edge)"/>
+      <path d="M133 416 C145 411 153 414 161 424 C168 434 165 445 156 448" stroke="#17120F" stroke-width="6.4"/>
+      <path d="M157 371 C164 382 174 390 185 395" stroke="#18130F" stroke-width="5.5"/>
+    </g>
+    <g id="index-finger">
+      <path d="M271 353 C288 330 294 304 297 268 L305 121 C306 83 306 49 322 31 C334 17 352 16 367 24 C386 34 393 53 391 77 L375 322 C373 358 370 390 372 421 C350 410 328 394 307 375 C294 363 281 356 271 353 Z" fill="url(#finger-ink)" mask="url(#finger-join)"/>
+      <path d="M297 268 L305 121 C306 83 306 49 322 31 C334 17 352 16 367 24 C386 34 393 53 391 77 L375 322" stroke="#12110E" stroke-width="7.8" filter="url(#drawn-edge)"/>
+      <path d="M297 268 C294 305 289 332 271 353" stroke="#12110E" stroke-width="6.8" filter="url(#drawn-edge)"/>
+      <path d="M375 322 C373 358 370 390 372 421" stroke="#16120E" stroke-width="5.5"/>
+      <g id="index-nail"><path d="M386 45 C375 36 361 41 352 53 C342 66 341 84 345 99 C348 111 359 119 370 121 C382 112 388 96 391 80 C392 66 391 54 386 45 Z" fill="#11100D"/><path d="M360 52 C366 44 375 41 381 43" stroke="#382A1D" stroke-width="2.5" opacity=".4"/></g>
+    </g>
+    <g id="wrist-shading" clip-path="url(#hand-crop)"><path d="M420 385 C434 440 423 480 402 517 L390 620 H477 V370 Z" fill="#C96C31" opacity=".19"/><path d="M148 442 C222 491 309 461 424 416 L470 620 H172 Z" fill="url(#wrist-ink)"/></g>
+    <g id="print-texture" clip-path="url(#hand-crop)" style="mix-blend-mode:multiply"><path d="M0 0H480V620H0Z" fill="#806435" opacity=".19" filter="url(#print-grain)"/></g>
+    <g id="outer-ink"><use href="#hand-silhouette" stroke="#15120E" stroke-width="8.4" filter="url(#drawn-edge)"/><use href="#hand-silhouette" stroke="#17130E" stroke-width="2.1" opacity=".44"/></g>
+  </g>
+</svg>
+

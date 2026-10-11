@@ -1,0 +1,191 @@
+[
+  {
+    "name": "desktop-1440",
+    "width": 1440,
+    "height": 900,
+    "folder": {
+      "x": 455.5,
+      "y": 245.53125,
+      "width": 529,
+      "height": 402.5,
+      "bottom": 648.03125,
+      "right": 984.5
+    },
+    "sticker": {
+      "x": 662.5615844726562,
+      "y": 130.65609741210938,
+      "width": 114.8768310546875,
+      "height": 101.68780517578125,
+      "bottom": 232.34390258789062,
+      "right": 777.4384155273438
+    },
+    "caption": {
+      "x": 578.296875,
+      "y": 664.03125,
+      "width": 283.40625,
+      "height": 38.5,
+      "bottom": 702.53125,
+      "right": 861.703125
+    },
+    "hint": {
+      "x": 591.546142578125,
+      "y": 763.114501953125,
+      "width": 256.90771484375,
+      "height": 98.98974609375,
+      "bottom": 862.104248046875,
+      "right": 848.453857421875
+    },
+    "footer": {
+      "x": 35,
+      "y": 861,
+      "width": 1370,
+      "height": 16,
+      "bottom": 877,
+      "right": 1405
+    },
+    "composition": {
+      "x": 0,
+      "y": 76,
+      "width": 1440,
+      "height": 684,
+      "bottom": 760,
+      "right": 1440
+    },
+    "overflow": false,
+    "fonts": [
+      "Bricolage Grotesque",
+      "Bricolage Grotesque",
+      "Space Grotesk",
+      "Space Grotesk",
+      "Space Mono",
+      "Space Mono"
+    ],
+    "svg": "<svg class=\"folder-illustration\" viewBox=\"0 0 460 350\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\">\n    <defs>\n      <linearGradient id=\"folder-5-front\" x1=\".7\" y1=\".08\" x2=\".12\" y2=\"1\"><stop offset=\"0\" stop-color=\"#98EBE9\"></stop><stop offset=\".48\" stop-color=\"#98EBE9\"></stop><stop offset=\"1\" stop-color=\"#7978E3\"></stop></linearGradient>\n      <linearGradient id=\"folder-5-side\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop stop-color=\"#7978E3\"></stop><stop offset=\".4\" stop-color=\"#4229E8\"></stop><stop offset=\"1\" stop-color=\"#4229E8\"></stop></linearGradient>\n      <filter id=\"folder-5-grain\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\".6\" numOctaves=\"1\" seed=\"17\" stitchTiles=\"stitch\"></feTurbulence><feColorMatrix type=\"saturate\" values=\"0\"></feColorMatrix><feComponentTransfer><feFuncR type=\"linear\" slope=\"2.8\" intercept=\"-.9\"></feFuncR><feFuncG type=\"linear\" slope=\"2.8\" intercept=\"-.9\"></feFuncG><feFuncB type=\"linear\" slope=\"2.8\" intercept=\"-.9\"></feFuncB><feFuncA type=\"linear\" slope=\".82\"></feFuncA></feComponentTransfer><feComposite in2=\"SourceAlpha\" operator=\"in\"></feComposite><feBlend in2=\"SourceGraphic\" mode=\"soft-light\"></feBlend></filter>\n      <clipPath id=\"folder-5-clip\"><path d=\"M36 100H151Q172 100 180 125H357L387 322H76Z\"></path></clipPath>\n    </defs>\n    <path d=\"M98 65H185L194 30H294Q323 30 332 63L398 70L424 87L398 322H76Z\" fill=\"#4229E8\" filter=\"url(#folder-5-grain)\"></path>\n    <path d=\"m398 87 26 0-26 235h-11Z\" fill=\"url(#folder-5-side)\"></path>\n    <path d=\"m105 85 289-10 2 237-301 3Z\" fill=\"#E6E0DC\"></path>\n    <path d=\"m93 91 292-7 9 229-299 3Z\" fill=\"#F0EBE5\"></path>\n    <path d=\"m82 97 292-9 14 225-297 5Z\" fill=\"#FFFCF5\"></path>\n    <g stroke=\"#756E76\" stroke-width=\"1.6\" opacity=\".5\"><path d=\"m199 99 1 14m21-15 1 14m21-15 1 14m21-15 1 14m21-15 1 14m21-15 1 14m21-15 1 14\"></path></g>\n    <path d=\"M36 100H151Q172 100 180 125H357L387 322H76Z\" fill=\"url(#folder-5-front)\"></path>\n    <g clip-path=\"url(#folder-5-clip)\"><path d=\"M36 100H151Q172 100 180 125H357L387 322H76Z\" fill=\"url(#folder-5-front)\" filter=\"url(#folder-5-grain)\"></path></g>\n  </svg>"
+  },
+  {
+    "name": "desktop-1920",
+    "width": 1920,
+    "height": 1080,
+    "folder": {
+      "x": 695.5,
+      "y": 335.53125,
+      "width": 529,
+      "height": 402.5,
+      "bottom": 738.03125,
+      "right": 1224.5
+    },
+    "sticker": {
+      "x": 902.5615844726562,
+      "y": 220.65609741210938,
+      "width": 114.8768310546875,
+      "height": 101.68780517578125,
+      "bottom": 322.3439025878906,
+      "right": 1017.4384155273438
+    },
+    "caption": {
+      "x": 818.296875,
+      "y": 754.03125,
+      "width": 283.40625,
+      "height": 38.5,
+      "bottom": 792.53125,
+      "right": 1101.703125
+    },
+    "hint": {
+      "x": 831.546142578125,
+      "y": 943.114501953125,
+      "width": 256.90771484375,
+      "height": 98.98974609375,
+      "bottom": 1042.104248046875,
+      "right": 1088.453857421875
+    },
+    "footer": {
+      "x": 35,
+      "y": 1041,
+      "width": 1850,
+      "height": 16,
+      "bottom": 1057,
+      "right": 1885
+    },
+    "composition": {
+      "x": 0,
+      "y": 76,
+      "width": 1920,
+      "height": 864,
+      "bottom": 940,
+      "right": 1920
+    },
+    "overflow": false,
+    "fonts": [
+      "Bricolage Grotesque",
+      "Bricolage Grotesque",
+      "Space Grotesk",
+      "Space Grotesk",
+      "Space Mono",
+      "Space Mono"
+    ],
+    "svg": "<svg class=\"folder-illustration\" viewBox=\"0 0 460 350\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\">\n    <defs>\n      <linearGradient id=\"folder-5-front\" x1=\".7\" y1=\".08\" x2=\".12\" y2=\"1\"><stop offset=\"0\" stop-color=\"#98EBE9\"></stop><stop offset=\".48\" stop-color=\"#98EBE9\"></stop><stop offset=\"1\" stop-color=\"#7978E3\"></stop></linearGradient>\n      <linearGradient id=\"folder-5-side\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop stop-color=\"#7978E3\"></stop><stop offset=\".4\" stop-color=\"#4229E8\"></stop><stop offset=\"1\" stop-color=\"#4229E8\"></stop></linearGradient>\n      <filter id=\"folder-5-grain\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\".6\" numOctaves=\"1\" seed=\"17\" stitchTiles=\"stitch\"></feTurbulence><feColorMatrix type=\"saturate\" values=\"0\"></feColorMatrix><feComponentTransfer><feFuncR type=\"linear\" slope=\"2.8\" intercept=\"-.9\"></feFuncR><feFuncG type=\"linear\" slope=\"2.8\" intercept=\"-.9\"></feFuncG><feFuncB type=\"linear\" slope=\"2.8\" intercept=\"-.9\"></feFuncB><feFuncA type=\"linear\" slope=\".82\"></feFuncA></feComponentTransfer><feComposite in2=\"SourceAlpha\" operator=\"in\"></feComposite><feBlend in2=\"SourceGraphic\" mode=\"soft-light\"></feBlend></filter>\n      <clipPath id=\"folder-5-clip\"><path d=\"M36 100H151Q172 100 180 125H357L387 322H76Z\"></path></clipPath>\n    </defs>\n    <path d=\"M98 65H185L194 30H294Q323 30 332 63L398 70L424 87L398 322H76Z\" fill=\"#4229E8\" filter=\"url(#folder-5-grain)\"></path>\n    <path d=\"m398 87 26 0-26 235h-11Z\" fill=\"url(#folder-5-side)\"></path>\n    <path d=\"m105 85 289-10 2 237-301 3Z\" fill=\"#E6E0DC\"></path>\n    <path d=\"m93 91 292-7 9 229-299 3Z\" fill=\"#F0EBE5\"></path>\n    <path d=\"m82 97 292-9 14 225-297 5Z\" fill=\"#FFFCF5\"></path>\n    <g stroke=\"#756E76\" stroke-width=\"1.6\" opacity=\".5\"><path d=\"m199 99 1 14m21-15 1 14m21-15 1 14m21-15 1 14m21-15 1 14m21-15 1 14m21-15 1 14\"></path></g>\n    <path d=\"M36 100H151Q172 100 180 125H357L387 322H76Z\" fill=\"url(#folder-5-front)\"></path>\n    <g clip-path=\"url(#folder-5-clip)\"><path d=\"M36 100H151Q172 100 180 125H357L387 322H76Z\" fill=\"url(#folder-5-front)\" filter=\"url(#folder-5-grain)\"></path></g>\n  </svg>"
+  },
+  {
+    "name": "mobile-390",
+    "width": 390,
+    "height": 844,
+    "folder": {
+      "x": 5.25,
+      "y": 275.640625,
+      "width": 379.5,
+      "height": 288.75,
+      "bottom": 564.390625,
+      "right": 384.75
+    },
+    "sticker": {
+      "x": 143.25729370117188,
+      "y": 170.81362915039062,
+      "width": 103.48541259765625,
+      "height": 93.35711669921875,
+      "bottom": 264.1707458496094,
+      "right": 246.74270629882812
+    },
+    "caption": {
+      "x": 66.734375,
+      "y": 578.390625,
+      "width": 256.515625,
+      "height": 35.25,
+      "bottom": 613.640625,
+      "right": 323.25
+    },
+    "hint": {
+      "x": 77.60973358154297,
+      "y": 715.9202270507812,
+      "width": 234.780517578125,
+      "height": 89.7220458984375,
+      "bottom": 805.6422729492188,
+      "right": 312.39025115966797
+    },
+    "footer": {
+      "x": 22,
+      "y": 812,
+      "width": 346,
+      "height": 12,
+      "bottom": 824,
+      "right": 368
+    },
+    "composition": {
+      "x": 0,
+      "y": 78,
+      "width": 390,
+      "height": 631,
+      "bottom": 709,
+      "right": 390
+    },
+    "overflow": false,
+    "fonts": [
+      "Bricolage Grotesque",
+      "Bricolage Grotesque",
+      "Space Grotesk",
+      "Space Grotesk",
+      "Space Mono",
+      "Space Mono"
+    ],
+    "svg": "<svg class=\"folder-illustration\" viewBox=\"0 0 460 350\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\">\n    <defs>\n      <linearGradient id=\"folder-5-front\" x1=\".7\" y1=\".08\" x2=\".12\" y2=\"1\"><stop offset=\"0\" stop-color=\"#98EBE9\"></stop><stop offset=\".48\" stop-color=\"#98EBE9\"></stop><stop offset=\"1\" stop-color=\"#7978E3\"></stop></linearGradient>\n      <linearGradient id=\"folder-5-side\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop stop-color=\"#7978E3\"></stop><stop offset=\".4\" stop-color=\"#4229E8\"></stop><stop offset=\"1\" stop-color=\"#4229E8\"></stop></linearGradient>\n      <filter id=\"folder-5-grain\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\".6\" numOctaves=\"1\" seed=\"17\" stitchTiles=\"stitch\"></feTurbulence><feColorMatrix type=\"saturate\" values=\"0\"></feColorMatrix><feComponentTransfer><feFuncR type=\"linear\" slope=\"2.8\" intercept=\"-.9\"></feFuncR><feFuncG type=\"linear\" slope=\"2.8\" intercept=\"-.9\"></feFuncG><feFuncB type=\"linear\" slope=\"2.8\" intercept=\"-.9\"></feFuncB><feFuncA type=\"linear\" slope=\".82\"></feFuncA></feComponentTransfer><feComposite in2=\"SourceAlpha\" operator=\"in\"></feComposite><feBlend in2=\"SourceGraphic\" mode=\"soft-light\"></feBlend></filter>\n      <clipPath id=\"folder-5-clip\"><path d=\"M36 100H151Q172 100 180 125H357L387 322H76Z\"></path></clipPath>\n    </defs>\n    <path d=\"M98 65H185L194 30H294Q323 30 332 63L398 70L424 87L398 322H76Z\" fill=\"#4229E8\" filter=\"url(#folder-5-grain)\"></path>\n    <path d=\"m398 87 26 0-26 235h-11Z\" fill=\"url(#folder-5-side)\"></path>\n    <path d=\"m105 85 289-10 2 237-301 3Z\" fill=\"#E6E0DC\"></path>\n    <path d=\"m93 91 292-7 9 229-299 3Z\" fill=\"#F0EBE5\"></path>\n    <path d=\"m82 97 292-9 14 225-297 5Z\" fill=\"#FFFCF5\"></path>\n    <g stroke=\"#756E76\" stroke-width=\"1.6\" opacity=\".5\"><path d=\"m199 99 1 14m21-15 1 14m21-15 1 14m21-15 1 14m21-15 1 14m21-15 1 14m21-15 1 14\"></path></g>\n    <path d=\"M36 100H151Q172 100 180 125H357L387 322H76Z\" fill=\"url(#folder-5-front)\"></path>\n    <g clip-path=\"url(#folder-5-clip)\"><path d=\"M36 100H151Q172 100 180 125H357L387 322H76Z\" fill=\"url(#folder-5-front)\" filter=\"url(#folder-5-grain)\"></path></g>\n  </svg>"
+  }
+]

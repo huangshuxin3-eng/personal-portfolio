@@ -1,0 +1,25 @@
+{
+  "checks": [
+    "desktop: initial CV pixel-identical to V1.0",
+    "desktop: keyboard, both boundaries, CV return pixel-identical",
+    "wheel below threshold does not switch",
+    "continuous wheel >640ms advances once only",
+    "horizontal trackpad delta",
+    "wheel final boundary",
+    "mouse drag both directions",
+    "small drag rebounds",
+    "edge resistance rebounds",
+    "CV remains pixel-identical after drag",
+    "desktop: no horizontal overflow or JavaScript errors",
+    "wide: initial CV pixel-identical to V1.0",
+    "wide: keyboard, both boundaries, CV return pixel-identical",
+    "wide: no horizontal overflow or JavaScript errors",
+    "mobile: initial CV pixel-identical to V1.0",
+    "mobile: keyboard, both boundaries, CV return pixel-identical",
+    "actual mobile touch swipes both directions",
+    "small swipe rebounds; vertical touch does not switch",
+    "mobile CV pixel-identical after touch",
+    "mobile: no horizontal overflow or JavaScript errors",
+    "reduced motion switches instantly, no animations"
+  ]
+}

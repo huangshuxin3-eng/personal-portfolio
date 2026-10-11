@@ -1,0 +1,61 @@
+{
+  "checks": [
+    "desktop: arrow input cancels foreground immediately and switches normally; no horizontal overflow at all sampled poses",
+    "desktop: CV -> Portfolio -> Demo -> CV, finite boundaries, returned CV pixel-identical to checkpoint",
+    "desktop: mouse drag works through foreground and cancels guide",
+    "desktop: click reaches folder; no route or content changes",
+    "desktop: once-only 3400ms intro exits; resting homepage pixel-identical to checkpoint",
+    "desktop: zero JavaScript errors",
+    "wide: arrow input cancels foreground immediately and switches normally; no horizontal overflow at all sampled poses",
+    "wide: CV -> Portfolio -> Demo -> CV, finite boundaries, returned CV pixel-identical to checkpoint",
+    "wide: mouse drag works through foreground and cancels guide",
+    "wide: click reaches folder; no route or content changes",
+    "wide: once-only 3400ms intro exits; resting homepage pixel-identical to checkpoint",
+    "wide: zero JavaScript errors",
+    "mobile: arrow input cancels foreground immediately and switches normally; no horizontal overflow at all sampled poses",
+    "mobile: CV -> Portfolio -> Demo -> CV, finite boundaries, returned CV pixel-identical to checkpoint",
+    "mobile: CDP real touch drag works through foreground and cancels guide",
+    "mobile: click reaches folder; no route or content changes",
+    "mobile: once-only 3400ms intro exits; resting homepage pixel-identical to checkpoint",
+    "mobile: zero JavaScript errors",
+    "wheel: below-threshold input cancels guide without switching; continuous burst advances once; horizontal trackpad delta works",
+    "toggling reduced-motion mid-guide immediately replaces motion with approved static hand pose",
+    "desktop: approved reduced-motion static hand fallback; first input dismisses; zero automatic/transition animations",
+    "mobile: approved reduced-motion static hand fallback; first input dismisses; zero automatic/transition animations"
+  ],
+  "measurements": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900,
+      "folderWidth": 687.6875,
+      "folderVisibleWidth": 580.0494565217391,
+      "handWidth": 570.049,
+      "handHeight": 858.7470703125,
+      "captionVisible": "visible",
+      "handPointerEvents": "none"
+    },
+    {
+      "name": "wide",
+      "width": 1920,
+      "height": 1080,
+      "folderWidth": 714.140625,
+      "folderVisibleWidth": 602.3620923913044,
+      "handWidth": 591.977,
+      "handHeight": 891.7838134765625,
+      "captionVisible": "visible",
+      "handPointerEvents": "none"
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "folderWidth": 379.5,
+      "folderVisibleWidth": 320.1,
+      "handWidth": 314.581,
+      "handHeight": 473.90167236328125,
+      "captionVisible": "visible",
+      "handPointerEvents": "none"
+    }
+  ]
+}
