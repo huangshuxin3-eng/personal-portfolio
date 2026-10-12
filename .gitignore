@@ -69,3 +69,6 @@ review/integration-slice-1/results.json
 
 # Local generated hover verification result.
 review/hover-paper/验收结果.json
+
+# CV V1 local screenshots, verification script and generated results.
+/review/cv-v1/

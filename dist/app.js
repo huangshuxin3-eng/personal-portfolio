@@ -92,9 +92,10 @@ entryFeedback.setAttribute('role', 'status'); stage.closest('main').append(entry
 let feedbackTimer;
 function openEntry() {
   if (locked || drag) return;
+  if (current === 0) { location.assign('/cv/'); return; }
   if (current === 1) { location.assign('/portfolio/'); return; }
   clearTimeout(feedbackTimer);
-  entryFeedback.textContent = current === 0 ? 'CV 暂未开放，简历正在准备中。' : 'Demo 暂未开放，演示视频正在准备中。';
+  entryFeedback.textContent = 'Demo 暂未开放，演示视频正在准备中。';
   entryFeedback.hidden = false;
   feedbackTimer = setTimeout(() => { entryFeedback.hidden = true; }, 3000);
 }

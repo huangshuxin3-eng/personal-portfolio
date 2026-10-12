@@ -32,3 +32,11 @@ URL：/、/portfolio/、/portfolio/legaltrace/。主机需支持目录 index.htm
 
 恢复快照：review/integration-slice-1/baseline/ 保存修改前首页 dist/ 和 Git 差异，本地忽略、不提交。
 必要回归脚本：review/integration-slice-1/desktop-review.mjs（真实最终 site/ HTTP 服务、Desktop1440×900）；结果、截图和录屏同目录，媒体不入 Git。
+
+## CV Page V1
+
+网页简历源码：portfolio-source/src/app/cv/page.tsx 与 resume.module.css。首页 CV 入口指向 /cv/，统一 build.mjs 将静态导出的 cv/ 与共享 _next/ 资源一起复制到 site/。页面保留普通 a 链接导航；作品集与 Case Study 源码、首页动画及手部交互保持冻结。上文「CV 未开放」为 Slice 1 历史状态；Demo 仍未开放。
+
+简历内容来自用户正式文本。按用户批注删除测试数量说明及按钮、链接的装饰箭头。CV 单独使用本地 Space Grotesk 字体（Google Fonts，SIL OFL，许可证在 cv/fonts/OFL.txt），沿用现有 Space Mono；原有字体资源未改动。没有 PDF 下载入口，后续取得正式 PDF 再接入。
+
+本地验收：node review/cv-v1/verify.mjs（使用已运行的 4190 服务，检查 CV 导航、拖动防误触、内容与链接、Desktop / Mobile；仅截图，不录屏）。完整页面截图及本地结果位于 review/cv-v1/；该目录为本地临时验收资料，不纳入版本管理。2026-10-12 用户本人完成 Desktop 视觉验收，确认保留当前设计。
