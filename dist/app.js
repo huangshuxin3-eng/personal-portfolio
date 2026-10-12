@@ -94,10 +94,7 @@ function openEntry() {
   if (locked || drag) return;
   if (current === 0) { location.assign('/cv/'); return; }
   if (current === 1) { location.assign('/portfolio/'); return; }
-  clearTimeout(feedbackTimer);
-  entryFeedback.textContent = 'Demo 暂未开放，演示视频正在准备中。';
-  entryFeedback.hidden = false;
-  feedbackTimer = setTimeout(() => { entryFeedback.hidden = true; }, 3000);
+  if (current === 2) { location.assign('/demo/'); return; }
 }
 stage.addEventListener('click', () => {
   const allowed = activation && activation.index === current;

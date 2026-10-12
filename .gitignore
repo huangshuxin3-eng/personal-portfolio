@@ -64,6 +64,8 @@ portfolio-source/.next/
 portfolio-source/out/
 review/integration-slice-1/baseline/
 !portfolio-source/public/legaltrace/*.png
+!portfolio-source/public/demo/LegalTrace-demo-web.mp4
+!portfolio-source/public/demo/LegalTrace-demo-poster.jpg
 portfolio-source/*.tsbuildinfo
 review/integration-slice-1/results.json
 
@@ -72,3 +74,8 @@ review/hover-paper/验收结果.json
 
 # CV V1 local screenshots, verification script and generated results.
 /review/cv-v1/
+
+# Demo local QA output; keep the reproducible checks and acceptance notes.
+review/demo-v1/*
+!review/demo-v1/verify.mjs
+!review/demo-v1/验收说明.md

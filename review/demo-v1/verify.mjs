@@ -1,0 +1,104 @@
+import { chromium } from 'file:///C:/Users/黄舒心/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs';
+import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import assert from 'node:assert/strict';
+
+const origin = 'http://127.0.0.1:4196', out = 'review/demo-v1';
+const browser = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: true });
+const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+const page = await context.newPage(), checks = [], errors = [], badAssets = [], limitations = [];
+page.on('pageerror', e => errors.push(e.message));
+page.on('response', r => { if (r.url().startsWith(origin) && r.status() >= 400 && !r.url().endsWith('/favicon.ico')) badAssets.push([r.status(), r.url()]); });
+const at = async index => page.waitForFunction(index => {
+  const el = document.querySelector('.main-folder');
+  return el?.dataset.index === String(index) && !el.hasAttribute('aria-busy');
+}, index);
+const ready = async () => page.waitForFunction(() => { const v = document.querySelector('video'); return v && v.readyState >= 2 && !v.error; });
+try {
+  await page.goto(origin + '/'); await at(0);
+  await page.locator('.main-folder').click(); await page.waitForURL(origin + '/cv/');
+  assert.equal(await page.locator('h1').innerText(), '黄舒心');
+  await page.getByRole('link', { name: '← BACK TO HOME', exact: true }).click(); await at(0);
+  await page.keyboard.press('ArrowRight'); await at(1);
+  await page.locator('.main-folder').click(); await page.waitForURL(origin + '/portfolio/');
+  assert.ok(await page.locator('h1').isVisible());
+  await page.goBack(); await at(0);
+  await page.keyboard.press('ArrowRight'); await at(1);
+  await page.keyboard.press('ArrowRight'); await at(2);
+  const box = await page.locator('.main-folder').boundingBox();
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  await page.mouse.down(); await page.mouse.move(box.x + box.width / 2 + 23, box.y + box.height / 2, { steps: 6 }); await page.mouse.up();
+  await at(2); assert.equal(page.url(), origin + '/');
+  checks.push('CV / Portfolio entrances and original folder animation work; cancelled drag does not navigate');
+  await page.locator('.main-folder').click(); await page.waitForURL(origin + '/demo/'); await ready();
+  checks.push('Homepage Demo click opens /demo/');
+  const metadata = await page.locator('video').evaluate(v => ({ width: v.videoWidth, height: v.videoHeight, duration: v.duration, controls: v.controls, paused: v.paused, autoplay: v.autoplay, preload: v.preload, codec: v.canPlayType('video/mp4; codecs="avc1.42E032, mp4a.40.2"'), error: v.error }));
+  assert.equal(metadata.width, 1920); assert.equal(metadata.height, 1128); assert.ok(Math.abs(metadata.duration - 199.43) < .1);
+  assert.equal(metadata.controls, true); assert.equal(metadata.paused, true); assert.equal(metadata.autoplay, false); assert.ok(metadata.codec);
+  const playerSize = await page.locator('video').boundingBox(); assert.ok(Math.abs(playerSize.width / playerSize.height - 16 / 9) < .01);
+  assert.equal(await page.locator('video').evaluate(v => getComputedStyle(v).objectFit), 'contain');
+  await page.screenshot({ path: `${out}/demo-desktop-1440.png`, fullPage: true });
+  checks.push('H.264/AAC MP4 decoded; 16:9 player contains entire frame; native controls, metadata preload, no autoplay');
+  await page.locator('video').hover();
+  await page.locator('video').click({ position: { x: 28, y: playerSize.height - 49 } });
+  await page.waitForFunction(() => { const v = document.querySelector('video'); return !v.paused && v.currentTime > .5; });
+  await page.locator('video').click({ position: { x: 28, y: playerSize.height - 49 } });
+  await page.waitForFunction(() => document.querySelector('video').paused);
+  checks.push('Native desktop play and pause controls work');
+  for (const time of [60, 104, 135, 183]) {
+    await page.locator('video').evaluate((v, time) => { v.currentTime = time; }, time);
+    await page.waitForFunction(time => { const v = document.querySelector('video'); return !v.seeking && Math.abs(v.currentTime - time) < .25 && v.readyState >= 2; }, time);
+  }
+  await page.screenshot({ path: `${out}/demo-desktop-playing.png`, fullPage: true });
+  checks.push('Seek/decode samples at 60, 104, 135 and 183 seconds');
+  await page.getByRole('button', { name: '全屏播放', exact: true }).click();
+  await page.waitForFunction(() => document.fullscreenElement?.tagName === 'VIDEO');
+  await page.screenshot({ path: `${out}/demo-fullscreen.png` });
+  await page.evaluate(() => document.exitFullscreen());
+  await page.waitForFunction(() => !document.fullscreenElement);
+  checks.push('Desktop fullscreen entry and exit work');
+  await page.locator('video').evaluate(v => { v.muted = true; v.volume = .5; v.playbackRate = 1.5; v.currentTime = v.duration - .5; return v.play(); });
+  await page.waitForFunction(() => document.querySelector('video').ended);
+  checks.push('Volume/mute and playback-rate properties accepted; playback reaches end');
+  await page.reload(); await ready(); assert.equal(await page.locator('video').evaluate(v => v.paused), true);
+  await page.goBack(); await page.waitForURL(origin + '/');
+  await page.goForward(); await page.waitForURL(origin + '/demo/'); await ready();
+  await page.getByRole('link', { name: '← BACK TO HOME', exact: true }).click(); await page.waitForURL(origin + '/'); await at(0);
+  await page.locator('.main-folder').focus(); await page.keyboard.press('ArrowRight'); await at(1); await page.keyboard.press('ArrowRight'); await at(2); await page.keyboard.press('Enter');
+  await page.waitForURL(origin + '/demo/'); await ready();
+  checks.push('Refresh, browser back/forward, return home and keyboard Demo entry work');
+  const live = page.getByRole('link', { name: /在线体验 LegalTrace/ });
+  assert.equal(await live.getAttribute('href'), 'https://legal-web-verification-workbench.vercel.app/');
+  assert.equal(await live.getAttribute('target'), '_blank');
+  await page.getByRole('link', { name: '阅读 Case Study', exact: true }).click(); await page.waitForURL(origin + '/portfolio/legaltrace/');
+  assert.ok(await page.locator('h1').isVisible());
+  await page.goto(origin + '/demo/'); await ready();
+  checks.push('True online product link and existing Case Study route');
+  limitations.push('External product reachability was checked separately with a read-only HTTP HEAD request (200); sandbox browser DNS is restricted.');
+  for (const [name, width, height] of [['desktop-1920', 1920, 1080], ['mobile-390', 390, 844]]) {
+    await page.setViewportSize({ width, height });
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+    await page.screenshot({ path: `${out}/demo-${name}.png`, fullPage: true });
+  }
+  checks.push('1440/1920 desktop and 390px responsive layout have no horizontal overflow');
+  const failurePage = await context.newPage();
+  await failurePage.route('**/LegalTrace-demo-web.mp4', r => r.abort());
+  await failurePage.goto(origin + '/demo/');
+  await failurePage.getByRole('alert').filter({ hasText: '视频暂时无法加载' }).waitFor();
+  await failurePage.unroute('**/LegalTrace-demo-web.mp4');
+  await failurePage.getByRole('button', { name: '重新加载', exact: true }).click();
+  await failurePage.waitForFunction(() => { const v = document.querySelector('video'); return v && v.readyState >= 2 && !v.error; });
+  assert.equal(await failurePage.getByRole('alert').filter({ hasText: '视频暂时无法加载' }).count(), 0);
+  checks.push('Failed media request gives a retry message; retry recovers playback');
+  await failurePage.close();
+  const hash = data => createHash('sha256').update(data).digest('hex');
+  const source = await readFile('portfolio-source/public/demo/LegalTrace-demo-web.mp4'), built = await readFile('site/demo/LegalTrace-demo-web.mp4');
+  assert.equal(hash(source), hash(built));
+  const atoms = []; let pos = 0;
+  while (pos + 8 <= built.length) { const size = built.readUInt32BE(pos), type = built.toString('ascii', pos + 4, pos + 8); atoms.push({ type, pos, size }); if (size < 8) break; pos += size; }
+  assert.ok(atoms.find(a => a.type === 'moov').pos < atoms.find(a => a.type === 'mdat').pos);
+  checks.push('Unified build retains byte-identical source MP4; moov precedes mdat for faststart');
+  assert.deepEqual(errors, []); assert.deepEqual(badAssets, []);
+  await writeFile(`${out}/results.json`, JSON.stringify({ pass: true, checks, metadata, playerSize, atoms, errors, badAssets, limitations }, null, 2));
+  console.log(JSON.stringify({ pass: true, checks, metadata, limitations }, null, 2));
+} finally { await browser.close(); }

@@ -8,10 +8,10 @@ run([path.join(source,'node_modules/next/dist/bin/next'),'build'],source);
 const assets=['index.html','style.css','app.js','hand-guide.css','hand-guide.js','retro-hand.svg'];
 const html=await readFile(path.join(root,'dist/index.html'),'utf8');
 for(const a of assets){await stat(path.join(root,'dist',a));if(a!=='index.html'&&!html.includes(a))throw Error('Missing homepage reference: '+a);}
-for(const a of ['cv/index.html','portfolio/index.html','portfolio/legaltrace/index.html','_next','legaltrace/workbench.png','legaltrace/extension.png','legaltrace/extension-panel.png','legaltrace/landing.png'])await stat(path.join(source,'out',a));
+for(const a of ['cv/index.html','portfolio/index.html','portfolio/legaltrace/index.html','demo/index.html','demo/LegalTrace-demo-web.mp4','demo/LegalTrace-demo-poster.jpg','_next','legaltrace/workbench.png','legaltrace/extension.png','legaltrace/extension-panel.png','legaltrace/landing.png'])await stat(path.join(source,'out',a));
 // Clear only the fixed, verified generated site directory; source and baseline never enter this path.
 if(path.dirname(site)!==root||path.basename(site)!=='site')throw Error('Unsafe output path');
 await rm(site,{recursive:true,force:true});await mkdir(site,{recursive:true});
 for(const a of assets)await cp(path.join(root,'dist',a),path.join(site,a));
-for(const a of ['cv','portfolio','_next','legaltrace'])await cp(path.join(source,'out',a),path.join(site,a),{recursive:true});
-console.log('BUILD PASS: unified static website -> '+site+' (homepage + CV + portfolio; no Demo placeholder)');
+for(const a of ['cv','portfolio','demo','_next','legaltrace'])await cp(path.join(source,'out',a),path.join(site,a),{recursive:true});
+console.log('BUILD PASS: unified static website -> '+site+' (homepage + CV + portfolio + Demo video)');

@@ -39,4 +39,14 @@ URL：/、/portfolio/、/portfolio/legaltrace/。主机需支持目录 index.htm
 
 简历内容来自用户正式文本。按用户批注删除测试数量说明及按钮、链接的装饰箭头。CV 单独使用本地 Space Grotesk 字体（Google Fonts，SIL OFL，许可证在 cv/fonts/OFL.txt），沿用现有 Space Mono；原有字体资源未改动。没有 PDF 下载入口，后续取得正式 PDF 再接入。
 
+## Demo Page（2026-10-12，用户本人已验收）
+
+首页 Demo 文件夹进入 `/demo/`。页面源码在 `portfolio-source/src/app/demo/`；视频与封面在 `portfolio-source/public/demo/`，由 `node build.mjs` 静态导出并复制到 `site/demo/`。视频是完整真实录屏的网页优化副本，未剪辑、配音、加字幕或章节。原始视频位于用户 Videos 目录，不进入构建，不被修改。
+
+播放器为 16:9，使用 contain 保留原视频全部画面，提供原生播放、暂停、进度、音量及全屏控件。在线体验指向真实 LegalTrace 公网地址，Case Study 指向 `/portfolio/legaltrace/`。刷新及返回使用普通网页导航。
+
+本地预览：统一构建后运行 `node preview.mjs`，打开 `http://127.0.0.1:4196/demo/`。此预览服务支持 MP4 MIME 与 HTTP byte ranges，避免普通 Python 静态服务的跳播限制。页面不依赖该服务器的特有 API；未来部署仍需支持目录 index.html、MP4 与 byte ranges，不能将所有路径重写到首页。
+
+网页视频约 35.0 MiB，启用 faststart 和 metadata preload，无自动播放。本轮保存在源资源目录进行本地验收，未选择外部托管、上传或部署。未来公开发布前应检查平台单文件限制与流量费用；若不适合随静态站点发布，可迁至支持 HTTPS、byte ranges 的对象存储/CDN，并更新播放器资源地址和构建资产检查。用户已确认录屏中的邮箱与企业结果可公开展示。
+
 本地验收：node review/cv-v1/verify.mjs（使用已运行的 4190 服务，检查 CV 导航、拖动防误触、内容与链接、Desktop / Mobile；仅截图，不录屏）。完整页面截图及本地结果位于 review/cv-v1/；该目录为本地临时验收资料，不纳入版本管理。2026-10-12 用户本人完成 Desktop 视觉验收，确认保留当前设计。
